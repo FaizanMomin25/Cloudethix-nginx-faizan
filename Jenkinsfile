@@ -3,7 +3,7 @@ pipeline {
     environment {
         registryURI = "https://registry.hub.docker.com"
         registry = "faizanmomin2508/faizan_cloudethix_nginx"
-        registryCredential = "01_docker_Hub_creds"
+        registryCredential = '01_docker_Hub_creds'
     }
     stages {
         stage('Building Image from Project Dir') {
