@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Building Image from Project Dir') {
             environment {
-                registry_endpoint = "${env.registryURI}${env.registry}"
-                tag_commit_id = "${env.registry}:${GIT_COMMIT}"
+                registry_endpoint = "${env.registryURI}" + "${env.registry}"
+                tag_commit_id = "${env.registry}" + ":${GIT_COMMIT}"
             }
             steps {
                 script {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Deploy Image') {
             environment {
-                registry_endpoint = "${env.registryURI}${env.registry}"
+                registry_endpoint = "${env.registryURI}" + "${env.registry}"
             }
             steps {
                 script {
