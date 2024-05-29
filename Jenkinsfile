@@ -34,6 +34,11 @@ pipeline {
                 }
             }
         }
+        stage(Remove Unused docker Image) {
+            steps {
+                sh "docker rmi $registry:$GIT_COMMIT"
+            }
+        }
     }
     post {
         always {
