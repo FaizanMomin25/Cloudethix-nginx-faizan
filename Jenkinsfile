@@ -3,7 +3,7 @@ pipeline {
     environment {
         registryURI = "https://registry.hub.docker.com/"
         registry = "teamcloudethix/cloudethix-sample-nginx"
-        registryCredential = '02_docker_hub_creds'
+        registryCredential = '01_docker_Hub_creds'
         }
 stages {
         stage('Building image from project dir') {
