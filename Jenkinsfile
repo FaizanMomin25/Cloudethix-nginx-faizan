@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         registryURI = "https://registry.hub.docker.com/"
-        registry = "teamcloudethix/cloudethix-sample-nginx"
+        registry = "teamcloudethix/faizan_cloudethix_nginx"
         registryCredential = '01_docker_Hub_creds'
         }
 stages {
