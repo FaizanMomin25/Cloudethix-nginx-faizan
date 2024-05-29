@@ -1,50 +1,49 @@
 pipeline {
-    agent any
+    agent any 
     environment {
-        registryURI = "https://registry.hub.docker.com"
-        registry = "faizanmomin2508/faizan_cloudethix_nginx"
-        registryCredential = '01_docker_Hub_creds'
-    }
-    stages {
-        stage('Building Image from Project Dir') {
+        registryURI = "https://registry.hub.docker.com/"
+        registry = "teamcloudethix/cloudethix-sample-nginx"
+        registryCredential = '02_docker_hub_creds'
+        }
+stages {
+        stage('Building image from project dir') {
             environment {
                 registry_endpoint = "${env.registryURI}" + "${env.registry}"
-                tag_commit_id = "${env.registry}" + ":${GIT_COMMIT}"
+                tag_commit_id     = "${env.registry}" + ":$GIT_COMMIT"
             }
-            steps {
+            steps{
                 script {
-                    def app = docker.build(tag_commit_id)
-                    docker.withRegistry(registry_endpoint, registryCredential) {
+                def app = docker.build(tag_commit_id)
+                docker.withRegistry( registry_endpoint, registryCredential ) {
                         app.push()
-                    }
                 }
             }
         }
-        stage('Deploy Image') {
+        }
+/*        stage('Deploy Image') {
             environment {
                 registry_endpoint = "${env.registryURI}" + "${env.registry}"
             }
-            steps {
+            steps{
                 script {
-                    def app = docker.build(tag_commit_id)
-                    docker.withRegistry(registry_endpoint, registryCredential) {
+                    docker.withRegistry( registry_endpoint, registryCredential ) {
                         app.push()
-                        app.push('latest')
-                    }
+                        app.push(latest)
+                    }   
                 }
-            }
+            }   
         }
-
-        // stage(Remove Unused docker Image) {
-        //     steps {
-        //         sh "docker rmi $registry:$GIT_COMMIT"
-        //     }
-        // }
+*/ 
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry:$GIT_COMMIT"
+                }
+        }
     }
-    post {
-        always {
-            echo "Deleting the Workspace"
-            deleteDir()
+    post { 
+        always { 
+            echo 'Deleting Workspace'
+            deleteDir() /* clean up our workspace */
         }
     }
 }
